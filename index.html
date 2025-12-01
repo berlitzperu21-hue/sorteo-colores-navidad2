@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang='es'>
+<head>
+<meta charset='UTF-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0'>
+<title>Sorteo de Colores Navideño</title>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: url('https://i.imgur.com/ONe5fND.png');
+  background-size: cover;
+  padding: 20px;
+  text-align:center;
+}
+.card {
+  background: rgba(255,255,255,0.9);
+  padding:25px;
+  border-radius:20px;
+  max-width:450px;
+  margin:0 auto;
+}
+</style>
+</head>
+<body>
+<audio autoplay loop>
+  <source src='https://www.bensound.com/bensound-music/bensound-christmaseve.mp3' type='audio/mpeg'>
+</audio>
+
+<div class='card'>
+<h2>🎄 Sorteo de Colores Navideño 🎁</h2>
+<p>Selecciona tu nombre y sortea un color único.</p>
+
+<select id='selectNombre'>
+<option value=''>-- Selecciona tu nombre --</option>
+<option>ELVA</option><option>ZOE</option>
+<option>CYNTHIA</option><option>SOFIA</option>
+<option>MILY</option><option>JUAN DIEGO</option>
+<option>FIORELLA</option><option>ALBA ROJAS</option>
+<option>TERESA</option><option>CATALINA</option>
+<option>LORENA</option><option>DANIELA</option>
+<option>NATALIA</option><option>ALBA RINCON</option>
+<option>CECILIA</option><option>LEONARDO</option>
+<option>ROSA</option><option>MATEO</option>
+<option>MILAGROS</option><option>GAEL</option>
+</select>
+
+<button id='btnSortear' onclick='sortearColor()'>Sortear Color</button>
+
+<div id='resultado' style='margin-top:20px;font-size:22px;font-weight:bold;'></div>
+</div>
+
+<script>
+let colores = [
+  "Rojo", "Azul", "Verde", "Amarillo", "Naranja",
+  "Rosado", "Morado", "Celeste", "Blanco", "Negro"
+];
+
+let nombresDisponibles = new Set([
+  "ELVA","ZOE","CYNTHIA","SOFIA","MILY","JUAN DIEGO",
+  "FIORELLA","ALBA ROJAS","TERESA","CATALINA","LORENA",
+  "DANIELA","NATALIA","ALBA RINCON","CECILIA","LEONARDO",
+  "ROSA","MATEO","MILAGROS","GAEL"
+]);
+
+function sortearColor() {
+  const nombreSel = document.getElementById("selectNombre").value;
+
+  if (!nombreSel) {
+    alert("Por favor selecciona tu nombre.");
+    return;
+  }
+
+  if (!nombresDisponibles.has(nombreSel)) {
+    alert("Este nombre ya participó en el sorteo.");
+    return;
+  }
+
+  if (colores.length === 0) {
+    document.getElementById("resultado").innerText =
+      "Ya no quedan colores disponibles.";
+    document.getElementById("btnSortear").disabled = true;
+    return;
+  }
+
+  const index = Math.floor(Math.random() * colores.length);
+  const color = colores.splice(index, 1)[0];
+
+  nombresDisponibles.delete(nombreSel);
+
+  document.getElementById("resultado").innerText =
+    nombreSel + ", tu color es: " + color + " 🎨";
+}
+</script>
+
+</body>
+</html>
